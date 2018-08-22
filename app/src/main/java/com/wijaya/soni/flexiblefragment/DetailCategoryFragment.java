@@ -1,14 +1,17 @@
 package com.wijaya.soni.flexiblefragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -59,8 +62,19 @@ public class DetailCategoryFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_profile:
+                Intent mIntent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(mIntent);
                 break;
             case R.id.btn_show_dialog:
+                OptionDialogFragment mOptionDialogFragment = new OptionDialogFragment();
+                mOptionDialogFragment.setOnOptionDialogListener(new OptionDialogFragment.OnOptionDialogListener(){
+                    @Override
+                    public void onOptionChoosen(String text) {
+                        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                FragmentManager mFragmentManager = getChildFragmentManager();
+                mOptionDialogFragment.show(mFragmentManager, OptionDialogFragment.class.getSimpleName());
                 break;
         }
     }
